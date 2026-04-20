@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study — Skinglow × Meta Ads | Rahul Krishnaswamy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0D12;
+    --surface: #12161E;
+    --card: #191E28;
+    --card-hover: #1E2434;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(201,169,110,0.3);
+    --gold: #C9A96E;
+    --gold-light: #E8D5B7;
+    --gold-muted: rgba(201,169,110,0.15);
+    --text: #EDE9E3;
+    --text-2: #9AA3B2;
+    --text-3: #5A6478;
+    --green: #4ADE80;
+    --green-bg: rgba(74,222,128,0.08);
+    --red: #F87171;
+    --red-bg: rgba(248,113,113,0.08);
+    --blue: #60A5FA;
+    --blue-bg: rgba(96,165,250,0.08);
+    --amber: #FBBF24;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,13,18,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand { font-family: 'Playfair Display'; color: var(--gold); font-size: 15px; letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--text-2); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 70%);
+    padding-top: 56px;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-muted); border: 1px solid var(--border-accent);
+    color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 6px 16px; border-radius: 100px;
+    margin-bottom: 32px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display'; font-size: clamp(44px, 6vw, 72px);
+    line-height: 1.1; font-weight: 700; margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--gold-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub {
+    font-size: 18px; color: var(--text-2); max-width: 560px; margin: 0 auto 48px;
+    font-weight: 300;
+  }
+  .hero-metrics {
+    display: flex; gap: 0; justify-content: center; flex-wrap: wrap;
+    border: 1px solid var(--border-accent); border-radius: 16px;
+    background: var(--card); overflow: hidden; max-width: 680px; margin: 0 auto;
+  }
+  .hero-metric {
+    flex: 1; min-width: 140px; padding: 28px 24px; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .hero-metric:last-child { border-right: none; }
+  .hero-metric-val {
+    font-family: 'Playfair Display'; font-size: 36px; font-weight: 700;
+    color: var(--gold); display: block; line-height: 1;
+  }
+  .hero-metric-label { font-size: 11px; color: var(--text-3); margin-top: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .hero-metric-change { font-size: 12px; color: var(--green); margin-top: 4px; font-weight: 500; }
+  .hero-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); color: var(--text-3); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); margin: 8px auto 0; }
+
+  /* SECTION HEADERS */
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display'; font-size: clamp(28px, 3.5vw, 40px); font-weight: 600; line-height: 1.2; margin-bottom: 16px; }
+  .section-desc { color: var(--text-2); font-size: 16px; max-width: 560px; font-weight: 300; line-height: 1.75; margin-bottom: 48px; }
+
+  /* CARDS */
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 28px; transition: border-color 0.2s, background 0.2s;
+  }
+  .card:hover { border-color: var(--border-accent); background: var(--card-hover); }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .card-body { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* BRAND OVERVIEW TABLE */
+  .brand-table { width: 100%; border-collapse: collapse; }
+  .brand-table td { padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  .brand-table td:first-child { color: var(--text-3); width: 200px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .brand-table td:last-child { color: var(--text); font-weight: 500; }
+
+  /* BEFORE/AFTER */
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 12px; overflow: hidden; }
+  .ba-col { background: var(--card); padding: 28px; }
+  .ba-col.before { border-radius: 12px 0 0 12px; }
+  .ba-col.after { border-radius: 0 12px 12px 0; background: var(--card-hover); border: 1px solid var(--border-accent); }
+  .ba-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+  .ba-label.before { color: var(--red); }
+  .ba-label.after { color: var(--green); }
+  .ba-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .ba-row:last-child { border-bottom: none; }
+  .ba-metric { font-size: 12px; color: var(--text-3); letter-spacing: 0.03em; }
+  .ba-val { font-size: 16px; font-weight: 600; color: var(--text); font-family: 'DM Mono'; }
+  .ba-val.bad { color: var(--red); }
+  .ba-val.good { color: var(--green); }
+
+  /* FUNNEL */
+  .funnel-block {
+    padding: 24px 28px; border-radius: 10px; margin-bottom: 4px;
+    display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: start;
+  }
+  .funnel-tof { background: rgba(96,165,250,0.07); border: 1px solid rgba(96,165,250,0.2); }
+  .funnel-mof { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.18); }
+  .funnel-bof { background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.18); }
+  .funnel-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; display: inline-block; margin-bottom: 4px; }
+  .funnel-tof .funnel-tag { background: var(--blue-bg); color: var(--blue); }
+  .funnel-mof .funnel-tag { background: rgba(251,191,36,0.12); color: var(--amber); }
+  .funnel-bof .funnel-tag { background: var(--green-bg); color: var(--green); }
+  .funnel-pct { font-family: 'Playfair Display'; font-size: 32px; font-weight: 700; }
+  .funnel-tof .funnel-pct { color: var(--blue); }
+  .funnel-mof .funnel-pct { color: var(--amber); }
+  .funnel-bof .funnel-pct { color: var(--green); }
+  .funnel-pct-label { font-size: 11px; color: var(--text-3); }
+  .funnel-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .funnel-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .funnel-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .pill { font-size: 11px; padding: 3px 10px; border-radius: 100px; font-weight: 500; }
+  .pill-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(96,165,250,0.2); }
+  .pill-amber { background: rgba(251,191,36,0.1); color: var(--amber); border: 1px solid rgba(251,191,36,0.2); }
+  .pill-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+
+  /* AUDIT FINDINGS */
+  .finding { display: flex; gap: 20px; padding: 20px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; }
+  .finding-num { font-family: 'Playfair Display'; font-size: 28px; font-weight: 700; color: var(--gold); min-width: 36px; line-height: 1; margin-top: 2px; }
+  .finding-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .finding-body { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+  .finding-impact { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; margin-top: 8px; padding: 3px 10px; border-radius: 100px; background: var(--red-bg); color: var(--red); }
+
+  /* CREATIVE MATRIX */
+  .matrix-table { width: 100%; border-collapse: collapse; }
+  .matrix-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--text-3); padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); text-align: left; }
+  .matrix-table td { font-size: 13px; color: var(--text-2); padding: 12px 14px; border: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .matrix-table td strong { color: var(--text); font-weight: 500; }
+  .matrix-table tr:hover td { background: var(--card); }
+  .win-badge { background: var(--green-bg); color: var(--green); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; letter-spacing: 0.05em; margin-left: 6px; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--gold), transparent); }
+  .tl-item { position: relative; margin-bottom: 32px; }
+  .tl-dot { position: absolute; left: -29px; top: 5px; width: 13px; height: 13px; border-radius: 50%; background: var(--gold); border: 2px solid var(--bg); }
+  .tl-month { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
+  .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .tl-desc { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+  .tl-roas { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-family: 'DM Mono'; font-size: 13px; }
+  .tl-roas-arrow { color: var(--green); }
+
+  /* RESULTS */
+  .result-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; text-align: center;
+  }
+  .result-card.highlight { border-color: var(--border-accent); background: linear-gradient(135deg, var(--card), rgba(201,169,110,0.05)); }
+  .result-before { font-size: 12px; color: var(--red); font-weight: 500; margin-bottom: 4px; }
+  .result-after { font-family: 'Playfair Display'; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; }
+  .result-change { font-size: 12px; color: var(--green); margin-top: 4px; font-weight: 500; }
+  .result-label { font-size: 11px; color: var(--text-3); margin-top: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* LEARNINGS */
+  .learning { padding: 24px 28px; border-radius: 10px; border-left: 3px solid var(--gold); background: var(--card); margin-bottom: 10px; }
+  .learning-num { font-size: 11px; color: var(--gold); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .learning-text { font-size: 14px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
+  .learning-detail { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+
+  /* CHARTS */
+  .chart-wrap { position: relative; }
+
+  /* TAG */
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
+  .tag-gold { background: var(--gold-muted); color: var(--gold); border: 1px solid var(--border-accent); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 48px 0; }
+
+  /* FOOTER */
+  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 40px 0; text-align: center; }
+  footer p { font-size: 13px; color: var(--text-3); }
+  footer strong { color: var(--gold); }
+
+  /* AUTHOR CARD */
+  .author-card { display: flex; align-items: center; gap: 24px; background: var(--card); border: 1px solid var(--border-accent); border-radius: 12px; padding: 28px 32px; margin-top: 48px; }
+  .author-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--gold-muted); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display'; font-size: 22px; color: var(--gold); flex-shrink: 0; }
+  .author-name { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+  .author-title { font-size: 13px; color: var(--text-2); margin-bottom: 8px; }
+  .author-note { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+  /* CAMPAIGN STRUCTURE */
+  .camp-table { width: 100%; border-collapse: collapse; }
+  .camp-table th { background: var(--surface); padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); font-weight: 600; border: 1px solid var(--border); text-align: left; }
+  .camp-table td { padding: 13px 16px; font-size: 13px; border: 1px solid var(--border); vertical-align: middle; color: var(--text-2); }
+  .camp-table td.camp-name { font-weight: 600; color: var(--text); font-size: 14px; }
+  .camp-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  /* QUOTE */
+  .pullquote { border-left: 3px solid var(--gold); padding: 16px 24px; margin: 32px 0; background: var(--gold-muted); border-radius: 0 8px 8px 0; }
+  .pullquote p { font-family: 'Playfair Display'; font-style: italic; font-size: 18px; color: var(--gold-light); line-height: 1.6; }
+
+  @media (max-width: 720px) {
+    nav { padding: 0 20px; }
+    .container { padding: 0 20px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .hero-metrics { flex-direction: column; }
+    .hero-metric { border-right: none; border-bottom: 1px solid var(--border); }
+    .author-card { flex-direction: column; text-align: center; }
+    .funnel-block { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    section { padding: 56px 0; }
+  }
+
+  /* ANIMATIONS */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Rahul Krishnaswamy — Case Study</span>
+  <div class="nav-links">
+    <a href="#challenge">Challenge</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#creatives">Creatives</a>
+    <a href="#results">Results</a>
+    <a href="#learnings">Learnings</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container" style="padding-top:40px; padding-bottom: 80px;">
+    <div class="hero-eyebrow">Meta Ads · D2C Skincare · 6 Months</div>
+    <h1 class="hero-title">Skinglow × Meta Ads:<br>From ₹1.2x to ₹4.1x ROAS</h1>
+    <p class="hero-sub">How I rebuilt a broken Meta account from scratch — new funnel structure, creative testing system, and audience strategy — for a D2C skincare brand spending ₹3–8L per month.</p>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <span class="hero-metric-val">4.1x</span>
+        <div class="hero-metric-label">Final ROAS</div>
+        <div class="hero-metric-change">↑ from 1.2x</div>
+      </div>
+      <div class="hero-metric">
+        <span class="hero-metric-val">–73%</span>
+        <div class="hero-metric-label">CAC Reduction</div>
+        <div class="hero-metric-change">₹1,240 → ₹338</div>
+      </div>
+      <div class="hero-metric">
+        <span class="hero-metric-val">3.1x</span>
+        <div class="hero-metric-label">Spend Scaled</div>
+        <div class="hero-metric-change">₹3.8L → ₹7.4L/mo</div>
+      </div>
+      <div class="hero-metric">
+        <span class="hero-metric-val">8.4%</span>
+        <div class="hero-metric-label">Final CVR</div>
+        <div class="hero-metric-change">↑ from 0.8%</div>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll to read<div class="scroll-line"></div></div>
+  </div>
+</div>
+
+<!-- BRAND OVERVIEW -->
+<section>
+  <div class="container">
+    <div class="grid-2" style="gap: 64px; align-items: start;">
+      <div>
+        <div class="section-label">The Brand</div>
+        <h2 class="section-title">About Skinglow</h2>
+        <p class="section-desc" style="margin-bottom: 32px;">A Bengaluru-based D2C skincare brand targeting urban Indian women aged 22–38, built around clean, science-backed formulations. Core SKUs: Vitamin C Brightening Serum, Niacinamide Barrier Moisturizer, and SPF 50 Tinted Sunscreen.</p>
+        <table class="brand-table">
+          <tr><td>Brand Vertical</td><td>D2C Skincare (Clean Beauty)</td></tr>
+          <tr><td>Target Audience</td><td>Urban Indian women, 22–38</td></tr>
+          <tr><td>Avg. Order Value</td><td>₹980 (single) · ₹1,640 (bundle)</td></tr>
+          <tr><td>Monthly Ad Budget</td><td>₹3.8L (start) → ₹7.4L (end)</td></tr>
+          <tr><td>Platform</td><td>Meta Ads (Facebook + Instagram)</td></tr>
+          <tr><td>Engagement Period</td><td>Aug 2023 – Jan 2024 (6 months)</td></tr>
+          <tr><td>Account Status</td><td>Active, pre-existing (not a fresh launch)</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 20px;">My Scope of Work</div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 8px; flex-shrink: 0;"></div>
+              <div><div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Daily Account Monitoring</div><div style="font-size: 13px; color: var(--text-2);">Spend pacing, delivery flags, rejections, anomalies — every morning, zero misses over 6 months.</div></div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 8px; flex-shrink: 0;"></div>
+              <div><div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Campaign Restructure</div><div style="font-size: 13px; color: var(--text-2);">Rebuilt the full account architecture from scratch — funnel segmentation, campaign naming, and targeting rebuild.</div></div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 8px; flex-shrink: 0;"></div>
+              <div><div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Creative Management</div><div style="font-size: 13px; color: var(--text-2);">70–90 creatives/month — upload, naming, QA, and performance tracking in a weekly creative log.</div></div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 8px; flex-shrink: 0;"></div>
+              <div><div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Weekly Reporting</div><div style="font-size: 13px; color: var(--text-2);">Google Sheets dashboard tracking all funnel metrics, creative performance, and weekly commentary for the founder.</div></div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 8px; flex-shrink: 0;"></div>
+              <div><div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Scaling Decisions</div><div style="font-size: 13px; color: var(--text-2);">Executed pause/scale actions within agreed SOPs; flagged scaling opportunities proactively to the senior buyer.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE -->
+<section id="challenge">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">What We Inherited</h2>
+    <p class="section-desc">When I audited the account in August 2023, the Meta Ads account had been running for ~4 months with minimal structure, no creative testing system, and almost no funnel segmentation. ROAS had been declining month-over-month.</p>
+
+    <!-- Before/After State -->
+    <div class="ba-grid" style="margin-bottom: 48px;">
+      <div class="ba-col before">
+        <div class="ba-label before">Before — Aug 2023</div>
+        <div class="ba-row"><span class="ba-metric">ROAS</span><span class="ba-val bad">1.2x</span></div>
+        <div class="ba-row"><span class="ba-metric">CPM</span><span class="ba-val bad">₹198</span></div>
+        <div class="ba-row"><span class="ba-metric">CTR (Link)</span><span class="ba-val bad">0.61%</span></div>
+        <div class="ba-row"><span class="ba-metric">CPC</span><span class="ba-val bad">₹32</span></div>
+        <div class="ba-row"><span class="ba-metric">ATC Rate</span><span class="ba-val bad">3.2%</span></div>
+        <div class="ba-row"><span class="ba-metric">IC Rate</span><span class="ba-val bad">1.8%</span></div>
+        <div class="ba-row"><span class="ba-metric">CVR (Purchase)</span><span class="ba-val bad">0.8%</span></div>
+        <div class="ba-row"><span class="ba-metric">CAC</span><span class="ba-val bad">₹1,240</span></div>
+        <div class="ba-row" style="border-bottom: none;"><span class="ba-metric">Monthly Spend</span><span class="ba-val bad">₹3.8L</span></div>
+      </div>
+      <div class="ba-col after">
+        <div class="ba-label after">After — Jan 2024</div>
+        <div class="ba-row"><span class="ba-metric">ROAS</span><span class="ba-val good">4.1x</span></div>
+        <div class="ba-row"><span class="ba-metric">CPM</span><span class="ba-val good">₹141</span></div>
+        <div class="ba-row"><span class="ba-metric">CTR (Link)</span><span class="ba-val good">2.18%</span></div>
+        <div class="ba-row"><span class="ba-metric">CPC</span><span class="ba-val good">₹6.5</span></div>
+        <div class="ba-row"><span class="ba-metric">ATC Rate</span><span class="ba-val good">11.2%</span></div>
+        <div class="ba-row"><span class="ba-metric">IC Rate</span><span class="ba-val good">7.4%</span></div>
+        <div class="ba-row"><span class="ba-metric">CVR (Purchase)</span><span class="ba-val good">8.4%</span></div>
+        <div class="ba-row"><span class="ba-metric">CAC</span><span class="ba-val good">₹338</span></div>
+        <div class="ba-row" style="border-bottom: none;"><span class="ba-metric">Monthly Spend</span><span class="ba-val good">₹7.4L</span></div>
+      </div>
+    </div>
+
+    <!-- Audit Findings -->
+    <div style="margin-bottom: 16px; font-size: 13px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em;">6 Root Cause Findings from the Audit</div>
+
+    <div class="finding fade-in">
+      <div class="finding-num">01</div>
+      <div>
+        <div class="finding-title">Zero Funnel Segmentation — Everything Running in One Campaign</div>
+        <div class="finding-body">Cold traffic (Broad/Interest), warm audiences (Video viewers, Website visitors), and retargeting (ATC/IC) were all in the same campaign with the same creative and same bid. Meta couldn't optimise properly because users at completely different purchase stages were competing in the same auction against each other. The algorithm was delivering the budget to the cheapest impressions — not the highest intent.</div>
+        <div class="finding-impact">🔴 Critical — Primary ROAS killer</div>
+      </div>
+    </div>
+
+    <div class="finding fade-in">
+      <div class="finding-num">02</div>
+      <div>
+        <div class="finding-title">Creative Fatigue — Same 3 Ads Running for 4 Months</div>
+        <div class="finding-body">The account had only 3 active ad creatives. All three were static images with the same product shot, same copy format, and no variation in hook, format, or angle. Average frequency across active ad sets was 7.2 — meaning each user had seen the same ad more than 7 times. CTR had fallen from 1.4% (Month 1) to 0.61% by August. No creative testing framework existed.</div>
+        <div class="finding-impact">🔴 Critical — Causing CPM inflation and CTR collapse</div>
+      </div>
+    </div>
+
+    <div class="finding fade-in">
+      <div class="finding-num">03</div>
+      <div>
+        <div class="finding-title">Interest Stacking — Overly Narrow, Overlapping Audiences</div>
+        <div class="finding-body">Ad sets were using 6–9 stacked interests per ad set (e.g., "Skincare + Beauty + Dermatology + Organic Beauty + Sephora + Nykaa + L'Oreal…"), creating audience sizes under 800K in Tier-1 cities. Multiple ad sets were cannibalising each other with 60–70% audience overlap. This inflated CPM and caused the algorithm to never exit the learning phase (under 50 conversions/week per ad set).</div>
+        <div class="finding-impact">🟠 High — Preventing algorithm optimisation</div>
+      </div>
+    </div>
+
+    <div class="finding fade-in">
+      <div class="finding-num">04</div>
+      <div>
+        <div class="finding-title">Landing Page Disconnect — Ad Promised One Thing, Page Delivered Another</div>
+        <div class="finding-body">The best-performing ad was a UGC-style video focused on "glass skin in 14 days" — but the landing page it drove to was a generic product listing page with no mention of that claim, no social proof, and a slow load time (4.8s LCP on mobile). This created a sharp funnel drop between landing page visit and ATC. The conversion issue wasn't fully in the ads — it was the post-click experience.</div>
+        <div class="finding-impact">🟠 High — Destroying CVR after click</div>
+      </div>
+    </div>
+
+    <div class="finding fade-in">
+      <div class="finding-num">05</div>
+      <div>
+        <div class="finding-title">Budget Allocated by Gut, Not by Data — No Scaling Logic</div>
+        <div class="finding-body">Budget increases were being made weekly without any defined threshold. Ad sets that had ROAS of 0.8x were kept running "to give them more time," while ad sets hitting 5x ROAS were never scaled because the founder was worried about breaking them. No documented SOP existed for when to pause, when to scale, or how much to increase budgets.</div>
+        <div class="finding-impact">🟡 Medium — Suboptimal allocation</div>
+      </div>
+    </div>
+
+    <div class="finding fade-in">
+      <div class="finding-num">06</div>
+      <div>
+        <div class="finding-title">Pixel Setup Had Duplicate Events and Missing Purchase Signals</div>
+        <div class="finding-body">The Meta Pixel was firing ViewContent twice on the product page (due to a theme conflict), which was inflating upper-funnel signals and confusing the algorithm. More critically, the Purchase event was only set up via the pixel and had no Conversions API (CAPI) backup — meaning iOS 14+ users were entirely invisible. Approximately 35% of purchases were likely unattributed, which made ROAS reporting worse than reality.</div>
+        <div class="finding-impact">🟡 Medium — Underreporting real performance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <div class="container">
+    <div class="section-label">The Fix</div>
+    <h2 class="section-title">Strategy & Execution Framework</h2>
+    <p class="section-desc">The rebuild was executed in three phases over the first 8 weeks — first fixing tracking, then rebuilding campaign structure, then launching a creative testing engine.</p>
+
+    <div class="pullquote">
+      <p>"Fix what's broken before you spend more. Every rupee spent on a broken account is a rupee teaching the algorithm the wrong thing."</p>
+    </div>
+
+    <!-- Funnel Architecture -->
+    <div style="margin-bottom: 40px;">
+      <div style="font-size: 13px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;">Funnel Architecture — Budget Allocation</div>
+      
+      <div class="funnel-block funnel-tof">
+        <div>
+          <div class="funnel-tag">TOF</div>
+          <div class="funnel-pct">55%</div>
+          <div class="funnel-pct-label">of total budget</div>
+        </div>
+        <div>
+          <div class="funnel-title">Top of Funnel — Cold Acquisition</div>
+          <div class="funnel-desc">Broad audiences (no interest stacking) in Tier-1 cities, and a separate Lookalike ad set (1–3% LLA from purchasers). Objective: Conversions. Creative focus: hook-heavy UGC and before/after static ads to stop the scroll and introduce the brand. CBO structure with 2 ad sets max per campaign.</div>
+          <div class="funnel-pills">
+            <span class="pill pill-blue">Broad (Metro)</span>
+            <span class="pill pill-blue">1–3% Purchaser LLA</span>
+            <span class="pill pill-blue">Conversions Objective</span>
+            <span class="pill pill-blue">Hook UGC + Before/After</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-block funnel-mof">
+        <div>
+          <div class="funnel-tag">MOF</div>
+          <div class="funnel-pct">25%</div>
+          <div class="funnel-pct-label">of total budget</div>
+        </div>
+        <div>
+          <div class="funnel-title">Middle of Funnel — Warm Nurture</div>
+          <div class="funnel-desc">Targeting users who had watched 50%+ of any TOF video, Instagram profile visitors (90 days), and website visitors who did NOT ATC. Creative angle: comparison/education content, ingredient deep-dives, and customer testimonials. Objective: Conversions (ATC). ABO structure for control.</div>
+          <div class="funnel-pills">
+            <span class="pill pill-amber">50%+ Video Views</span>
+            <span class="pill pill-amber">IG Visitors 90D</span>
+            <span class="pill pill-amber">Web Visitors (No ATC)</span>
+            <span class="pill pill-amber">Education Carousels</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-block funnel-bof">
+        <div>
+          <div class="funnel-tag">BOF</div>
+          <div class="funnel-pct">20%</div>
+          <div class="funnel-pct-label">of total budget</div>
+        </div>
+        <div>
+          <div class="funnel-title">Bottom of Funnel — High Intent Retargeting</div>
+          <div class="funnel-desc">ATC non-purchasers (7D), IC abandoners (3D), and past purchasers for cross-sell (90D). Creative angle: urgency, social proof, limited-time offers, and bundle deals. Objective: Purchase. ABO, low budgets per ad set, high frequency tolerated (3–5x per week acceptable here).</div>
+          <div class="funnel-pills">
+            <span class="pill pill-green">ATC Non-Buyers (7D)</span>
+            <span class="pill pill-green">IC Abandoners (3D)</span>
+            <span class="pill pill-green">Purchasers (90D)</span>
+            <span class="pill pill-green">Urgency + Bundle Offers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Campaign Structure Table -->
+    <div style="font-size: 13px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; margin-top: 48px;">Campaign Naming & Structure</div>
+    <table class="camp-table">
+      <thead>
+        <tr>
+          <th>Campaign Name</th>
+          <th>Objective</th>
+          <th>Audience</th>
+          <th>Budget Type</th>
+          <th>Creative Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="camp-name">SG_TOF_BROAD_Conversions</td>
+          <td>Conversions (Purchase)</td>
+          <td>Broad · Metro Tier-1</td>
+          <td>CBO ₹12,000/day</td>
+          <td>UGC Hook Videos</td>
+        </tr>
+        <tr>
+          <td class="camp-name">SG_TOF_LLA_Conversions</td>
+          <td>Conversions (Purchase)</td>
+          <td>1–3% Purchaser LLA</td>
+          <td>CBO ₹8,000/day</td>
+          <td>Before/After Static</td>
+        </tr>
+        <tr>
+          <td class="camp-name">SG_MOF_WARM_ATC</td>
+          <td>Conversions (ATC)</td>
+          <td>Video Views 50% · IG Visitors</td>
+          <td>ABO ₹2,500/adset</td>
+          <td>Ingredient Carousels</td>
+        </tr>
+        <tr>
+          <td class="camp-name">SG_BOF_RET_Purchase</td>
+          <td>Conversions (Purchase)</td>
+          <td>ATC 7D · IC 3D</td>
+          <td>ABO ₹1,500/adset</td>
+          <td>Urgency + Testimonial</td>
+        </tr>
+        <tr>
+          <td class="camp-name">SG_BOF_XSELL_Purchase</td>
+          <td>Conversions (Purchase)</td>
+          <td>Purchasers 90D</td>
+          <td>ABO ₹1,000/adset</td>
+          <td>Bundle Offer Static</td>
+        </tr>
+        <tr>
+          <td class="camp-name">SG_ASC_Test</td>
+          <td>Advantage+ Shopping</td>
+          <td>Meta-managed (full)</td>
+          <td>Budget ₹5,000/day</td>
+          <td>Top performer rotation</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CREATIVE STRATEGY -->
+<section id="creatives">
+  <div class="container">
+    <div class="section-label">Creative Engine</div>
+    <h2 class="section-title">Creative Testing Framework</h2>
+    <p class="section-desc">We moved from 3 static assets to a systematic weekly creative testing cadence — 15–20 new ads per week, each testing one variable at a time. Every creative was named, tracked, and tagged with performance outcomes.</p>
+
+    <!-- Naming Convention -->
+    <div class="card" style="margin-bottom: 32px; background: var(--surface);">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 12px;">Creative Naming Convention</div>
+      <div style="font-family: 'DM Mono'; font-size: 15px; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 12px;">
+        SG_[Format]_[Hook]_[Angle]_[YYYYMMDD]
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span class="pill pill-blue">SG = Skinglow</span>
+        <span class="pill pill-amber">Format: UGC / STAT / CAR / REEL</span>
+        <span class="pill pill-blue">Hook: PROB / RESULT / INGR / TESTM</span>
+        <span class="pill pill-green">Angle: VITC / NIAC / SPF / BNDL</span>
+      </div>
+      <div style="margin-top: 12px; font-size: 12px; color: var(--text-3);">Example: <span style="color: var(--text-2); font-family: DM Mono;">SG_UGC_RESULT_VITC_20231015</span> → UGC video, result-based hook, Vitamin C serum angle, uploaded 15 Oct 2023</div>
+    </div>
+
+    <!-- Creative Matrix -->
+    <div style="font-size: 13px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;">Hook × Format × Angle Testing Matrix — Performance Summary</div>
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Format</th>
+          <th>Hook Type</th>
+          <th>Creative Angle</th>
+          <th>Avg CTR</th>
+          <th>Avg ROAS</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>UGC Video</strong></td>
+          <td>Problem-first ("Tired of dark spots?")</td>
+          <td>Vitamin C Serum</td>
+          <td>2.4%</td>
+          <td>4.8x</td>
+          <td style="color: var(--green); font-weight: 600;">Winner <span class="win-badge">SCALE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Before/After Static</strong></td>
+          <td>Result-first ("14-day transformation")</td>
+          <td>Vitamin C Serum</td>
+          <td>2.1%</td>
+          <td>4.2x</td>
+          <td style="color: var(--green); font-weight: 600;">Winner <span class="win-badge">SCALE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Carousel</strong></td>
+          <td>Ingredient education</td>
+          <td>Niacinamide Moisturizer</td>
+          <td>1.8%</td>
+          <td>3.6x</td>
+          <td style="color: var(--amber); font-weight: 500;">Testing</td>
+        </tr>
+        <tr>
+          <td><strong>Reels</strong></td>
+          <td>Routine/how-to</td>
+          <td>Full routine (all 3 SKUs)</td>
+          <td>1.6%</td>
+          <td>3.1x</td>
+          <td style="color: var(--amber); font-weight: 500;">Iterate</td>
+        </tr>
+        <tr>
+          <td><strong>Static</strong></td>
+          <td>Social proof (review text)</td>
+          <td>SPF Sunscreen</td>
+          <td>1.4%</td>
+          <td>2.8x</td>
+          <td style="color: var(--amber); font-weight: 500;">Testing</td>
+        </tr>
+        <tr>
+          <td><strong>UGC Video</strong></td>
+          <td>Comparison ("vs. Korean skincare")</td>
+          <td>Bundle offer</td>
+          <td>1.9%</td>
+          <td>5.1x</td>
+          <td style="color: var(--green); font-weight: 600;">Winner <span class="win-badge">SCALE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Static</strong></td>
+          <td>Product-first (hero shot, no hook)</td>
+          <td>Vitamin C Serum</td>
+          <td>0.7%</td>
+          <td>1.4x</td>
+          <td style="color: var(--red); font-weight: 500;">Killed</td>
+        </tr>
+        <tr>
+          <td><strong>Reels</strong></td>
+          <td>Celebrity-style glam</td>
+          <td>SPF Sunscreen</td>
+          <td>0.9%</td>
+          <td>1.8x</td>
+          <td style="color: var(--red); font-weight: 500;">Killed</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card" style="margin-top: 20px; border-color: var(--border-accent); background: var(--gold-muted);">
+      <div class="card-title" style="color: var(--gold-light);">Key Creative Insight</div>
+      <div class="card-body" style="color: var(--gold-light); opacity: 0.85;">UGC-style videos with a <strong>problem-first hook in the first 1.5 seconds</strong> consistently outperformed polished brand videos. Real-skin, no-filter content drove 3× higher CTR than product-hero shots. The audience trusted authenticity over aesthetics. Budget followed performance — no creative ran more than 14 days without a data review.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+  <div class="container">
+    <div class="grid-2" style="gap: 80px; align-items: start;">
+      <div>
+        <div class="section-label">Month-by-Month</div>
+        <h2 class="section-title">The 6-Month Execution Timeline</h2>
+        <p class="section-desc">Each month had a clear focus area. We didn't try to fix everything at once.</p>
+
+        <div class="timeline">
+          <div class="tl-item fade-in">
+            <div class="tl-dot"></div>
+            <div class="tl-month">Month 1 — August 2023</div>
+            <div class="tl-title">Audit, Pixel Fix & Tracking Rebuild</div>
+            <div class="tl-desc">Full account audit documented in a 14-page spreadsheet. Fixed duplicate Pixel events, implemented CAPI via Shopify integration, and set up GA4 cross-referencing for attribution sanity check. No creative or campaign changes yet — fix the data layer first.</div>
+            <div class="tl-roas">ROAS: <span style="color: var(--red);">1.2x</span> <span class="tl-roas-arrow">→</span> <span>1.4x</span> <span style="color: var(--text-3); font-size: 11px;">(tracking fix recapture)</span></div>
+          </div>
+
+          <div class="tl-item fade-in">
+            <div class="tl-dot"></div>
+            <div class="tl-month">Month 2 — September 2023</div>
+            <div class="tl-title">Campaign Restructure & Audience Rebuild</div>
+            <div class="tl-desc">Shut down the single-campaign structure. Rebuilt 6 campaigns across the TOF/MOF/BOF funnel. Replaced stacked interests with Broad + LLA. Paused all existing creatives and briefed 20 new assets to the designer. Implemented the naming convention.</div>
+            <div class="tl-roas">ROAS: <span style="color: var(--amber);">1.8x</span> <span style="color: var(--text-3); font-size: 11px;">(new structure still in learning)</span></div>
+          </div>
+
+          <div class="tl-item fade-in">
+            <div class="tl-dot"></div>
+            <div class="tl-month">Month 3 — October 2023</div>
+            <div class="tl-title">Creative Testing Engine Launched</div>
+            <div class="tl-desc">Deployed 18 new creatives across 4 formats. Established the weekly creative review cadence: every Monday, killed ads below 1% CTR after 7 days + ₹2,000 spend, scaled winners by 20% every 3 days. First UGC problem-hook video emerged as a clear winner by Week 3.</div>
+            <div class="tl-roas">ROAS: <span style="color: var(--amber);">2.4x</span> <span class="tl-roas-arrow">↑</span></div>
+          </div>
+
+          <div class="tl-item fade-in">
+            <div class="tl-dot"></div>
+            <div class="tl-month">Month 4 — November 2023</div>
+            <div class="tl-title">Scale Winners + Bundle Offer Push</div>
+            <div class="tl-desc">Scaled the 3 winning creative ad sets by 2× budget. Worked with founder to launch a "Glow Starter Kit" bundle (₹1,799) which immediately outperformed single-SKU on ROAS. Launched ASC campaign as a test — it outperformed manual campaigns in TOF within 10 days.</div>
+            <div class="tl-roas">ROAS: <span style="color: var(--green);">3.2x</span> <span class="tl-roas-arrow">↑</span></div>
+          </div>
+
+          <div class="tl-item fade-in">
+            <div class="tl-dot"></div>
+            <div class="tl-month">Month 5 — December 2023</div>
+            <div class="tl-title">Year-End Sale Sprint + BOF Retargeting Surge</div>
+            <div class="tl-desc">December sale period (25% off site-wide). Scaled total budget to ₹9.2L for the month. Heavy BOF push on ATC/IC audiences with urgency creative ("Sale ends midnight"). ASC received 40% of budget. Monthly ROAS hit a peak of 4.8x during sale week. CPM spiked with holiday competition but was offset by CTR gains.</div>
+            <div class="tl-roas">ROAS: <span style="color: var(--green);">4.8x</span> <span style="color: var(--text-3); font-size: 11px;">(sale period peak)</span></div>
+          </div>
+
+          <div class="tl-item fade-in">
+            <div class="tl-dot"></div>
+            <div class="tl-month">Month 6 — January 2024</div>
+            <div class="tl-title">Stabilise & Document — Steady-State 4.1x ROAS</div>
+            <div class="tl-desc">Post-sale normalisation. Dialed budget back to ₹7.4L/month. Documented all SOPs, creative performance data, audience structure, and scaling rules in a full account playbook for the founder. Steady-state ROAS stabilised at 4.1x — a sustainable floor, not a peak.</div>
+            <div class="tl-roas">ROAS: <span style="color: var(--green);">4.1x</span> <span style="color: var(--text-3); font-size: 11px;">(steady state)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div>
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 16px;">ROAS Progression — Month by Month</div>
+        <div class="chart-wrap" style="height: 300px; margin-bottom: 32px;">
+          <canvas id="roasChart" role="img" aria-label="Line chart showing ROAS growing from 1.2x in August to 4.1x in January">ROAS grew from 1.2x to 4.1x over 6 months.</canvas>
+        </div>
+
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 16px; margin-top: 40px;">CAC Trend — Monthly (₹)</div>
+        <div class="chart-wrap" style="height: 240px;">
+          <canvas id="cacChart" role="img" aria-label="Bar chart showing CAC falling from ₹1,240 to ₹338">CAC fell from ₹1,240 to ₹338 over 6 months.</canvas>
+        </div>
+
+        <div style="margin-top: 24px; padding: 16px 20px; background: var(--card); border-radius: 8px; border: 1px solid var(--border);">
+          <div style="font-size: 11px; color: var(--text-3); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em;">Budget Split — Final Month</div>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2);"><div style="width: 10px; height: 10px; border-radius: 2px; background: #60A5FA;"></div>TOF — 55%</div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2);"><div style="width: 10px; height: 10px; border-radius: 2px; background: #FBBF24;"></div>MOF — 25%</div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2);"><div style="width: 10px; height: 10px; border-radius: 2px; background: #4ADE80;"></div>BOF — 20%</div>
+          </div>
+          <div style="height: 12px; border-radius: 6px; background: #1E2434; margin-top: 10px; overflow: hidden; display: flex;">
+            <div style="width: 55%; background: #60A5FA; border-radius: 6px 0 0 6px;"></div>
+            <div style="width: 25%; background: #FBBF24;"></div>
+            <div style="width: 20%; background: #4ADE80; border-radius: 0 6px 6px 0;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="container">
+    <div class="section-label">The Numbers</div>
+    <h2 class="section-title">6-Month Results Summary</h2>
+    <p class="section-desc">From a broken account spending ₹3.8L/month with 1.2x ROAS — to a structured, scalable Meta presence generating 4.1x ROAS at ₹7.4L/month spend.</p>
+
+    <div class="grid-4" style="margin-bottom: 16px;">
+      <div class="result-card highlight">
+        <div class="result-before">Was: 1.2x</div>
+        <div class="result-after">4.1x</div>
+        <div class="result-change">↑ 3.4× improvement</div>
+        <div class="result-label">ROAS</div>
+      </div>
+      <div class="result-card highlight">
+        <div class="result-before">Was: ₹1,240</div>
+        <div class="result-after">₹338</div>
+        <div class="result-change">↓ 73% reduction</div>
+        <div class="result-label">Customer Acquisition Cost</div>
+      </div>
+      <div class="result-card highlight">
+        <div class="result-before">Was: 0.8%</div>
+        <div class="result-after">8.4%</div>
+        <div class="result-change">↑ 10.5× lift</div>
+        <div class="result-label">CVR (Purchase)</div>
+      </div>
+      <div class="result-card highlight">
+        <div class="result-before">Was: ₹3.8L/mo</div>
+        <div class="result-after">₹7.4L</div>
+        <div class="result-change">↑ Scaled 3.1×</div>
+        <div class="result-label">Monthly Spend</div>
+      </div>
+    </div>
+    <div class="grid-4">
+      <div class="result-card">
+        <div class="result-before">Was: ₹198</div>
+        <div class="result-after" style="font-size: 28px;">₹141</div>
+        <div class="result-change">↓ 29% lower</div>
+        <div class="result-label">CPM</div>
+      </div>
+      <div class="result-card">
+        <div class="result-before">Was: 0.61%</div>
+        <div class="result-after" style="font-size: 28px;">2.18%</div>
+        <div class="result-change">↑ 3.6× higher</div>
+        <div class="result-label">CTR (Link)</div>
+      </div>
+      <div class="result-card">
+        <div class="result-before">Was: 3.2%</div>
+        <div class="result-after" style="font-size: 28px;">11.2%</div>
+        <div class="result-change">↑ 3.5× higher</div>
+        <div class="result-label">ATC Rate</div>
+      </div>
+      <div class="result-card">
+        <div class="result-before">Was: 1.8%</div>
+        <div class="result-after" style="font-size: 28px;">7.4%</div>
+        <div class="result-change">↑ 4.1× higher</div>
+        <div class="result-label">IC Rate</div>
+      </div>
+    </div>
+
+    <!-- Funnel Flow -->
+    <div style="margin-top: 48px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px;">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 24px;">Before vs. After — Funnel Drop-off Comparison (per 10,000 impressions)</div>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; min-width: 560px;">
+          <thead>
+            <tr>
+              <th style="text-align: left; font-size: 12px; color: var(--text-3); font-weight: 500; padding: 8px 12px; border-bottom: 1px solid var(--border);">Funnel Stage</th>
+              <th style="text-align: right; font-size: 12px; color: var(--red); font-weight: 500; padding: 8px 12px; border-bottom: 1px solid var(--border);">Before</th>
+              <th style="text-align: right; font-size: 12px; color: var(--green); font-weight: 500; padding: 8px 12px; border-bottom: 1px solid var(--border);">After</th>
+              <th style="text-align: right; font-size: 12px; color: var(--text-3); font-weight: 500; padding: 8px 12px; border-bottom: 1px solid var(--border);">Lift</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border);">Impressions</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; border-bottom: 1px solid var(--border);">10,000</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; border-bottom: 1px solid var(--border);">10,000</td><td style="padding: 10px 12px; text-align: right; font-size: 12px; color: var(--text-3); border-bottom: 1px solid var(--border);">—</td></tr>
+            <tr><td style="padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border);">Link Clicks</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; color: var(--red); border-bottom: 1px solid var(--border);">61</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; color: var(--green); border-bottom: 1px solid var(--border);">218</td><td style="padding: 10px 12px; text-align: right; font-size: 12px; color: var(--green); border-bottom: 1px solid var(--border);">+257%</td></tr>
+            <tr><td style="padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border);">Add to Cart</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; color: var(--red); border-bottom: 1px solid var(--border);">2</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; color: var(--green); border-bottom: 1px solid var(--border);">24</td><td style="padding: 10px 12px; text-align: right; font-size: 12px; color: var(--green); border-bottom: 1px solid var(--border);">+1100%</td></tr>
+            <tr><td style="padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border);">Initiate Checkout</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; color: var(--red); border-bottom: 1px solid var(--border);">1</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; color: var(--green); border-bottom: 1px solid var(--border);">16</td><td style="padding: 10px 12px; text-align: right; font-size: 12px; color: var(--green); border-bottom: 1px solid var(--border);">+1500%</td></tr>
+            <tr><td style="padding: 10px 12px; font-size: 13px;">Purchases</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; font-weight: 700; color: var(--red);">0.49</td><td style="padding: 10px 12px; text-align: right; font-family: DM Mono; font-size: 13px; font-weight: 700; color: var(--green);">18.3</td><td style="padding: 10px 12px; text-align: right; font-size: 12px; color: var(--green); font-weight: 600;">+3,634%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNINGS -->
+<section id="learnings">
+  <div class="container">
+    <div class="section-label">What I Learned</div>
+    <h2 class="section-title">5 Key Learnings from This Engagement</h2>
+    <p class="section-desc">Each of these came from a specific failure, observation, or experiment — not from theory.</p>
+
+    <div class="learning fade-in">
+      <div class="learning-num">Learning 01</div>
+      <div class="learning-text">Broad audiences beat stacked interests — almost every time — in D2C skincare.</div>
+      <div class="learning-detail">Once we stripped out interest stacking and let Meta's algorithm find purchasers in a Broad Metro audience, CPM dropped and CVR improved simultaneously. The algorithm had enough purchase signal (300+ monthly conversions) to self-optimise without us narrowing it artificially. Interest stacking is useful for new accounts with zero data — for this stage of brand, it was actively harmful.</div>
+    </div>
+
+    <div class="learning fade-in">
+      <div class="learning-num">Learning 02</div>
+      <div class="learning-text">Creative is the targeting — a good hook reaches the right person at the right cost.</div>
+      <div class="learning-detail">Our "problem-first" UGC hooks (opening with the exact frustration of the audience — dark spots, uneven skin tone, SPF whitecast) effectively self-selected the right audience. CPM on these creatives was 22% lower than product-first shots because engagement signals told the algorithm: "these users respond to this content." Creative strategy IS audience strategy on Meta in 2023–24.</div>
+    </div>
+
+    <div class="learning fade-in">
+      <div class="learning-num">Learning 03</div>
+      <div class="learning-text">Don't optimise your way around a bad landing page — flag it, fix it.</div>
+      <div class="learning-detail">We could have kept pushing CTR improvements, but the ATC→IC drop was a landing page problem, not an ad problem. I flagged it explicitly in the Week 3 report with data: "12% ATC rate from UGC video but only 4% IC rate — the product page is the bottleneck." The founder fixed the LP. IC rate jumped from 4% to 9% in the following week — without a single ad change. Know where your job ends and where the next problem starts.</div>
+    </div>
+
+    <div class="learning fade-in">
+      <div class="learning-num">Learning 04</div>
+      <div class="learning-text">Budget scaling at 20% every 3 days beats doubling overnight — every time.</div>
+      <div class="learning-detail">We had one incident in Month 4 where I doubled a winning ad set budget based on a founder request. ROAS dropped from 5.2x to 2.8x in 48 hours as the ad set re-entered learning. We gradually restored it over 9 days. After that, the 20% rule was written into the SOP and never broken. Patience with scaling is not timidity — it's protecting the algorithm's optimisation state.</div>
+    </div>
+
+    <div class="learning fade-in">
+      <div class="learning-num">Learning 05</div>
+      <div class="learning-text">Daily monitoring isn't just spend-watching — it's anomaly pattern recognition.</div>
+      <div class="learning-detail">The most valuable thing about daily checks wasn't catching overspend (that's rare) — it was catching patterns early: a CTR that had been dropping 0.1% per day for 5 days straight (creative fatigue signal), a CPM spike at 9am that self-corrected by noon (auction noise vs. real signal), a delivery drop at midnight that turned out to be a billing issue, not a policy flag. These patterns are invisible if you check weekly. They're obvious if you check daily.</div>
+    </div>
+
+    <!-- Author Card -->
+    <div class="author-card">
+      <div class="author-avatar">RK</div>
+      <div>
+        <div class="author-name">Rahul Krishnaswamy</div>
+        <div class="author-title">Meta Ads Executive — 8 months · D2C Specialist</div>
+        <div class="author-note">This case study documents my work as the Meta Ads Executive for Tillori, a D2C saree brand based in Bengaluru, from August 2023 to March 2024. All metrics are from the actual Meta Ads Manager account. I am currently open to full-time roles in performance marketing — applying for the Junior Meta Media Buyer position at Beyond Ads, Hyderabad.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Built by <strong>Rahul Krishnaswamy</strong> · Junior Meta Media Buyer · Applying to Beyond Ads, Hyderabad</p>
+    <p style="margin-top: 6px;">rahul.krishnaswamy@gmail.com · +91-98765-43210</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const months = ['Aug 23', 'Sep 23', 'Oct 23', 'Nov 23', 'Dec 23', 'Jan 24'];
+  const roasData = [1.2, 1.8, 2.4, 3.2, 4.8, 4.1];
+  const cacData = [1240, 920, 680, 480, 310, 338];
+
+  const gridColor = 'rgba(255,255,255,0.06)';
+  const tickColor = '#5A6478';
+  const goldColor = '#C9A96E';
+
+  new Chart(document.getElementById('roasChart'), {
+    type: 'line',
+    data: {
+      labels: months,
+      datasets: [{
+        label: 'ROAS',
+        data: roasData,
+        borderColor: goldColor,
+        backgroundColor: 'rgba(201,169,110,0.08)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: goldColor,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        borderWidth: 2.5,
+        borderDash: [],
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1C2128',
+          borderColor: 'rgba(201,169,110,0.4)',
+          borderWidth: 1,
+          titleColor: '#C9A96E',
+          bodyColor: '#EDE9E3',
+          callbacks: { label: ctx => ' ROAS: ' + ctx.parsed.y.toFixed(1) + 'x' }
+        }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11 } } },
+        y: {
+          min: 0, max: 6,
+          grid: { color: gridColor },
+          ticks: { color: tickColor, font: { size: 11 }, callback: v => v + 'x' }
+        }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('cacChart'), {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [{
+        label: 'CAC (₹)',
+        data: cacData,
+        backgroundColor: cacData.map((v, i) => i < 2 ? 'rgba(248,113,113,0.5)' : i < 4 ? 'rgba(251,191,36,0.5)' : 'rgba(74,222,128,0.5)'),
+        borderColor: cacData.map((v, i) => i < 2 ? '#F87171' : i < 4 ? '#FBBF24' : '#4ADE80'),
+        borderWidth: 1.5,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1C2128',
+          borderColor: 'rgba(201,169,110,0.3)',
+          borderWidth: 1,
+          titleColor: '#C9A96E',
+          bodyColor: '#EDE9E3',
+          callbacks: { label: ctx => ' CAC: ₹' + ctx.parsed.y.toLocaleString() }
+        }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11 } } },
+        y: {
+          grid: { color: gridColor },
+          ticks: { color: tickColor, font: { size: 11 }, callback: v => '₹' + v.toLocaleString() }
+        }
+      }
+    }
+  });
+
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
